@@ -1,28 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="ui fixed inverted menu vue-color">
+      <div class="ui container">
+        <a href="#" class="header item">Vue JS CRUD with Laravel API</a>
+      </div>
+    </div>
+    <div class="ui main container">
+      <MyForm/>
+      <ProductList :products="products"/>
+    </div>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios";
+import MyForm from "./components/MyForm";
+import ProductList from "./components/ProductList";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MyForm,
+    ProductList
+  },
+  data() {
+    return {
+      products: []
+    }
+  },
+  methods: {
+    getProducts() {
+      axios.get("http://localhost:8000/api/products").then(response => {
+        this.products = response.data.data;
+      })
+    }
+  },
+  created() {
+    this.getProducts();
   }
 }
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.vue-color {
+  background: #42b983 !important;
+}
+
+.vue-color a {
+  color: aliceblue;
+}
+
+.main.container {
   margin-top: 60px;
+}
+
+.submit-button {
+  margin-top: 24px !important;
+  float: right;
 }
 </style>
