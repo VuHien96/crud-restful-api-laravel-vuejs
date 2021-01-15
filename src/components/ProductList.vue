@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <Product v-for="product in products" :key="product.id" :product="product"/>
+        <Product v-for="product in products" :key="product.id" :product="product" @onDelete="onDelete"/>
         </tbody>
       </table>
     </div>
@@ -31,6 +31,11 @@ export default {
   props:{
     products:{
       type:Array
+    }
+  },
+  methods:{
+    onDelete(id) {
+      this.$emit("onDelete",id);
     }
   }
 }
